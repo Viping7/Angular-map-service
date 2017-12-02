@@ -10,7 +10,8 @@ import { DirectionsMapDirective } from './direction.directive';
 @NgModule({
   declarations: [
     AppComponent,
-    DirectionsMapDirective
+    DirectionsMapDirective,
+    
   ],
   imports: [
     BrowserModule,
@@ -21,7 +22,7 @@ import { DirectionsMapDirective } from './direction.directive';
       libraries: ["places","geometry"]
     })
   ],
-  providers: [GoogleMapsAPIWrapper],
+  providers: [GoogleMapsAPIWrapper,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

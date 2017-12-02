@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 route-wrapper">
       <div class="route-selection">
       <input placeholder="Enter Source" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #originFeild [ngModel]='origin' >
       <input placeholder="Enter Destination" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #destFeild [ngModel]='destination' >
@@ -24,9 +24,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 map-section">
       <agm-map [latitude]="lat" [longitude]="lng">
-        <sebm-google-map-directions [origin]="origin" [destination]="destination" [selectedMode]='mode' (routes)='getAllRoutes($event)'></sebm-google-map-directions>
+        <sebm-google-map-directions [origin]="origin" [destination]="destination" [selectedMode]='mode' (routes)='getAllRoutes($event)' [originLatLng]='originLatLng' [destinationLatLng]='destLatLng'></sebm-google-map-directions>
       </agm-map>
     </div>
   </div>

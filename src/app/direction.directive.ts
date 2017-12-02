@@ -2,7 +2,7 @@
 import { Directive, Input,EventEmitter,Output } from '@angular/core';
 import { GoogleMapsAPIWrapper } from '@agm/core'
 declare var google: any;
-declare var $:any;
+declare var MarkerClusterer;
 @Directive({
   selector: 'sebm-google-map-directions'
 })
@@ -10,6 +10,8 @@ export class DirectionsMapDirective {
   @Input() origin = '';
   @Input() destination = '';
   @Input() selectedMode='';
+  @Input() originLatLng=[];
+  @Input() destinationLatLng=[];
   @Output() routes = new EventEmitter<any>();
   constructor(private gmapsApi: GoogleMapsAPIWrapper) { }
 
@@ -37,13 +39,14 @@ export class DirectionsMapDirective {
 
 
   getSearchedLocation(locationIndex) {
+    
     this.gmapsApi.getNativeMap().then(map => {
       console.log(this.selectedMode);
       console.log(this);
       var rootSelector=this;
       var directionsService = new google.maps.DirectionsService;
       var directionsDisplay = new google.maps.DirectionsRenderer;
-      
+      directionsDisplay.setMap(null);
       directionsDisplay.setMap(map);
       directionsService.route({
         origin: this.origin,
@@ -62,42 +65,58 @@ export class DirectionsMapDirective {
             directionsDisplay.setRouteIndex(locationIndex);
             console.log(response);
             rootSelector.routes.emit(response.routes);
-            console.log(response.routes[locationIndex].legs[0].distance)
-            console.log(response.routes[locationIndex].legs[0].duration)
-            $('.distance').html(response.routes[locationIndex].legs[0].distance.text)
-            $('.time').html(response.routes[locationIndex].legs[0].duration.text)
-            for(let i=0;i<response.routes.length;i++){
-                $('')
-              }
+           
+          
         } else {
           window.alert('Directions request failed due to ' + status);
         }
 
         var service = new google.maps.places.PlacesService(map);
-        
-        service.nearbySearch({
-          location: {lat: -33.867, lng: 151.195},
-          radius: 500,
-          type: ['store']
-        }, (response,status)=>{
-          console.log(response);
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < response.length; i++) {
-              rootSelector.createMarker(response[i],map);
-            }
-          }
-        });
+        rootSelector.setNearByPlaces(service,rootSelector.originLatLng,rootSelector,map);
+        rootSelector.setNearByPlaces(service,rootSelector.destinationLatLng,rootSelector,map);
 
       });
 
     });
   }
 
+  setNearByPlaces(service,latLng,rootSelector,map){
+    console.log(latLng);
+      service.nearbySearch({
+      location: {lat: latLng[0], lng: latLng[1]},
+     // rankBy:google.maps.places.RankBy.DISTANCE,
+      type: ['Software Company'],
+      radius:500,
+     keyword:['Software Company']
+    }, (response,status)=>{
+      console.log(response);
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        let markers=[]
+        for (var i = 0; i < response.length; i++) {
+            markers.push(rootSelector.createMarker(response[i],map));
+        }
+        var markerCluster = new MarkerClusterer(map, markers, 
+          {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
+    });
+  }
+
   createMarker(place,map){
+    console.log(place);
+    var infowindow = new google.maps.InfoWindow();
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
       map: map,
       position: place.geometry.location
     });
+
+   
+ 
+      google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(place.name);
+      infowindow.open(map, this);
+    });
+
+    return marker;
   }
 }

@@ -12,6 +12,8 @@ declare var $:any;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  originLatLng: any=[];
+  destLatLng: any=[];
   routes: any;
 
   @ViewChild("originFeild")
@@ -52,13 +54,15 @@ export class AppComponent implements OnInit {
         if (place.geometry === undefined) {
           return;
         }
-        console.log(place);
-        console.log(this.originRef.nativeElement.value);
         if (mode === 'ORG') {
           this.vc.origin = this.originRef.nativeElement.value;
+          this.originLatLng[0]=place.geometry.location.lat();
+          this.originLatLng[1]=place.geometry.location.lng();
 
         } else {
           this.vc.destination = this.destRef.nativeElement.value; // its a example aleatory position
+          this.destLatLng[0]=place.geometry.location.lat();
+          this.destLatLng[1]=place.geometry.location.lng();
 
         }
 
