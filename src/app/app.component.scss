@@ -1,0 +1,54 @@
+agm-map {
+    height: 100vh;
+  }
+
+  .route-selection{
+    background: #2f965d;
+    padding: 30px 15px 15px 25px;
+    margin:0px -30px;
+    .form-control{
+      border-radius: 0px;
+      box-shadow: none;
+      margin-bottom: 15px;
+      border:none;
+      //background: none;
+    //  color: #fff;
+     //border-bottom: 1px solid rgba(255,255,255,0.5)
+    }
+    .btn{
+      &.btn-custom{
+        width:100%;
+      }
+    }
+  }
+
+  .routes-section{
+    .item{
+      padding: 10px 15px;
+      cursor: pointer;
+      margin: 0px -30px 0px -15px;
+      border-bottom: 1px solid #aaa;
+      &:hover{
+
+        background: #f0f0f0;
+      }
+      h3{
+        font-size: 16px;
+      }
+      .route-name{
+        display: inline-block;
+        vertical-align:top;
+        width: 67%;
+        font-weight: 600;
+      }
+      
+      .route-attr{
+        @extend .route-name;
+        width:30%;
+        text-align: right;
+        h4{
+          font-size: 14px;
+        }
+      }
+    }
+  }
