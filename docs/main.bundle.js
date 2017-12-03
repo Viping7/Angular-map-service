@@ -16,7 +16,7 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-3 route-wrapper\">\n      <div class=\"route-selection\">\n      <input placeholder=\"Enter Source\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #originFeild [ngModel]='origin' >\n      <input placeholder=\"Enter Destination\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #destFeild [ngModel]='destination' >\n      <select [(ngModel)]='mode' class='form-control'>\n        <option value='DRIVING'>Driving</option>\n        <option value=\"WALKING\">Walking</option>\n        <option value=\"BICYCLING\">Bicycling</option>\n        <option value=\"TRANSIT\">Transit</option>\n      </select>\n     \n      <button (click)='getRoute(0)' class=\"btn btn-custom\">Get Direction</button>\n      </div>\n      <div class=\"routes-section\">\n        <div class=\"item\" *ngFor='let route of routes; let i=index' (click)='getRoute(i)'>\n          <h3 class=\"route-name\">{{route.summary}}</h3>\n          <div class='route-attr'>\n            <h3>{{route.legs[0].distance.text}}</h3>\n            <h4>{{route.legs[0].duration.text}}</h4>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-9 map-section\">\n      <agm-map [latitude]=\"lat\" [longitude]=\"lng\">\n        <sebm-google-map-directions [origin]=\"origin\" [destination]=\"destination\" [selectedMode]='mode' (routes)='getAllRoutes($event)' [originLatLng]='originLatLng' [destinationLatLng]='destLatLng'></sebm-google-map-directions>\n      </agm-map>\n    </div>\n  </div>\n</div>\n\n\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-3 route-wrapper\">\n      <div class=\"route-selection\">\n      <input placeholder=\"Enter Source\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #originFeild [ngModel]='origin' >\n      <input placeholder=\"Enter Destination\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\" #destFeild [ngModel]='destination' >\n      <select [(ngModel)]='mode' class='form-control'>\n        <option value='DRIVING'>Driving</option>\n        <option value=\"WALKING\">Walking</option>\n        <option value=\"BICYCLING\">Bicycling</option>\n        <option value=\"TRANSIT\">Transit</option>\n      </select>\n     \n      <button (click)='getRoute(0)' class=\"btn btn-custom\">Get Direction</button>\n      </div>\n\n\n      <div class=\"panel-group\" id=\"accordion\" *ngIf='routes'>\n             <div class=\"panel panel-default\">\n                <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#routes\">\n          <div class=\"panel-heading\">\n            <h4 class=\"panel-title\">\n             \n              Alternate Routes ({{routes.length}})\n            </h4>\n          </div>\n        </a>\n          <div id=\"routes\" class=\"panel-collapse collapse in\">\n            <div class=\"panel-body\">\n              <div class=\"routes-section\">\n                <div class=\"item\" *ngFor='let route of routes; let i=index' (click)='getRoute(i)'>\n                  <h3 class=\"route-name\">{{route.summary}}</h3>\n                  <div class='route-attr'>\n                    <h3>{{route.legs[0].distance.text}}</h3>\n                    <h4>{{route.legs[0].duration.text}}</h4>\n                  </div>\n                </div>\n              </div></div>\n          </div>\n        </div>\n        <div class=\"panel panel-default\" *ngIf='places'>\n\n            <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#places\">\n          <div class=\"panel-heading\">\n            <h4 class=\"panel-title\">\n              Places ({{places.length}})\n            </h4>\n          </div>\n        </a>\n          <div id=\"places\" class=\"panel-collapse collapse\">\n            <div class=\"panel-body\">\n              <div class=\"places-section\">\n                  <div class=\"item\" *ngFor='let place of places'>\n                    <h1>{{place.name}}</h1>\n                    <h5>{{place.vicinity}}</h5>\n                  </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n\n\n\n\n    </div>\n    <div class=\"col-md-9 map-section\">\n      <agm-map [latitude]=\"lat\" [longitude]=\"lng\">\n        <sebm-google-map-directions [origin]=\"origin\" [destination]=\"destination\" [selectedMode]='mode' (routes)='getAllRoutes($event)' (places)=\"getAllPlaces($event)\" [originLatLng]='originLatLng' [destinationLatLng]='destLatLng'></sebm-google-map-directions>\n      </agm-map>\n    </div>\n  </div>\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -28,7 +28,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "agm-map {\n  height: 100vh; }\n\n.container-fluid {\n  padding: 0px 15px 0px 0px; }\n\n.route-wrapper {\n  height: 100vh;\n  overflow-y: auto;\n  background: #fdfdfd;\n  padding: 0px; }\n\n.route-selection {\n  background: #009688;\n  padding: 30px 15px 15px 25px; }\n  .route-selection .form-control {\n    border-radius: 0px;\n    box-shadow: none;\n    margin-bottom: 15px;\n    border: none;\n    background: rgba(255, 255, 255, 0.9); }\n  .route-selection .btn.btn-custom {\n    border-radius: 0px;\n    background: #fff;\n    color: #009688;\n    font-weight: 500;\n    padding: 8px 20px; }\n\n.routes-section .item {\n  padding: 10px 15px 10px 25px;\n  cursor: pointer;\n  margin: 0px;\n  border-bottom: 1px solid #aaa; }\n  .routes-section .item:hover {\n    background: #f0f0f0; }\n  .routes-section .item h3 {\n    font-size: 16px;\n    margin-top: 0px; }\n  .routes-section .item .route-name, .routes-section .item .route-attr {\n    display: inline-block;\n    vertical-align: top;\n    width: 67%;\n    font-weight: 600; }\n  .routes-section .item .route-attr {\n    width: 30%;\n    text-align: right; }\n    .routes-section .item .route-attr h4 {\n      font-size: 14px; }\n\n.map-section {\n  padding-left: 0px; }\n", ""]);
+exports.push([module.i, "agm-map {\n  height: 100vh; }\n\n.container-fluid {\n  padding: 0px 15px 0px 0px; }\n\na {\n  text-decoration: none; }\n  a:hover {\n    text-decoration: none; }\n\n.route-wrapper {\n  height: 100vh;\n  overflow-y: auto;\n  background: #fdfdfd;\n  padding: 0px; }\n\n.route-selection {\n  background: #009688;\n  padding: 30px 15px 15px 30px;\n  margin-bottom: 10px; }\n  .route-selection .form-control {\n    border-radius: 0px;\n    box-shadow: none;\n    margin-bottom: 15px;\n    border: none;\n    background: rgba(255, 255, 255, 0.9); }\n  .route-selection .btn.btn-custom {\n    border-radius: 0px;\n    background: #fff;\n    color: #009688;\n    font-weight: 500;\n    padding: 8px 20px; }\n\n.routes-section .item {\n  padding: 10px 15px 10px 25px;\n  cursor: pointer;\n  margin: 0px;\n  border-bottom: 1px solid #aaa; }\n  .routes-section .item:hover {\n    background: #f0f0f0; }\n  .routes-section .item h3 {\n    font-size: 16px;\n    margin-top: 0px; }\n  .routes-section .item .route-name, .routes-section .item .route-attr {\n    display: inline-block;\n    vertical-align: top;\n    width: 67%;\n    font-weight: 600; }\n  .routes-section .item .route-attr {\n    width: 30%;\n    text-align: right; }\n    .routes-section .item .route-attr h4 {\n      font-size: 14px; }\n\n.panel {\n  background: none;\n  border: none; }\n  .panel .panel-heading {\n    border-radius: 0px;\n    background: #009688;\n    padding: 15px 30px;\n    border: none;\n    border-bottom: 1px solid #009688; }\n    .panel .panel-heading h4 {\n      color: #fff; }\n  .panel .collapsed .panel-heading {\n    background: none;\n    padding: 15px 30px;\n    border: none;\n    border-bottom: 1px solid #009688; }\n    .panel .collapsed .panel-heading h4 {\n      color: #009688; }\n    .panel .collapsed .panel-heading:hover {\n      background: #009688; }\n      .panel .collapsed .panel-heading:hover h4 {\n        color: #fff; }\n  .panel .panel-body {\n    padding-right: 0px; }\n\n.places-section .item {\n  padding: 10px 15px; }\n  .places-section .item h1 {\n    margin-top: 0px;\n    font-size: 18px;\n    line-height: 25px;\n    font-weight: 500; }\n  .places-section .item h5 {\n    font-size: 14px;\n    color: #888;\n    line-height: 20px;\n    margin-top: 15px; }\n  .places-section .item:nth-child(even) {\n    background: #f2f2f2; }\n\n.map-section {\n  padding-left: 0px; }\n", ""]);
 
 // exports
 
@@ -114,9 +114,13 @@ var AppComponent = (function () {
     AppComponent.prototype.getRoute = function (locationIndex) {
         this.vc.getSearchedLocation(locationIndex);
     };
-    AppComponent.prototype.getAllRoutes = function ($event) {
-        this.routes = $event;
+    AppComponent.prototype.getAllRoutes = function (routes) {
+        this.routes = routes;
         console.log(this.routes);
+    };
+    AppComponent.prototype.getAllPlaces = function (places) {
+        this.places = places;
+        console.log(this.places);
     };
     return AppComponent;
 }());
@@ -239,6 +243,7 @@ var DirectionsMapDirective = (function () {
         this.originLatLng = [];
         this.destinationLatLng = [];
         this.routes = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* EventEmitter */]();
+        this.places = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["f" /* EventEmitter */]();
     }
     DirectionsMapDirective.prototype.ngOnInit = function () {
         console.log(this.origin);
@@ -304,18 +309,17 @@ var DirectionsMapDirective = (function () {
             radius: 500,
             keyword: ['Software Company']
         }, function (response, status) {
-            console.log(response);
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 var markers = [];
+                rootSelector.places.emit(response);
                 for (var i = 0; i < response.length; i++) {
-                    markers.push(rootSelector.createMarker(response[i], map));
+                    markers.push(rootSelector.createMarker(response[i], map, rootSelector));
                 }
                 var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
             }
         });
     };
-    DirectionsMapDirective.prototype.createMarker = function (place, map) {
-        console.log(place);
+    DirectionsMapDirective.prototype.createMarker = function (place, map, rootSelector) {
         var infowindow = new google.maps.InfoWindow();
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
@@ -323,6 +327,7 @@ var DirectionsMapDirective = (function () {
             position: place.geometry.location
         });
         google.maps.event.addListener(marker, 'click', function () {
+            rootSelector.places.emit(place);
             infowindow.setContent(place.name);
             infowindow.open(map, this);
         });
@@ -354,6 +359,10 @@ __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Output */])(),
     __metadata("design:type", Object)
 ], DirectionsMapDirective.prototype, "routes", void 0);
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Output */])(),
+    __metadata("design:type", Object)
+], DirectionsMapDirective.prototype, "places", void 0);
 DirectionsMapDirective = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["g" /* Directive */])({
         selector: 'sebm-google-map-directions'

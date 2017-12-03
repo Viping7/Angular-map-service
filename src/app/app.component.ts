@@ -12,6 +12,7 @@ declare var $:any;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  places: any;
   originLatLng: any=[];
   destLatLng: any=[];
   routes: any;
@@ -79,9 +80,14 @@ export class AppComponent implements OnInit {
     this.vc.getSearchedLocation(locationIndex);
   }
 
-  getAllRoutes($event){
-   this.routes=$event;
+  getAllRoutes(routes){
+   this.routes=routes;
    console.log(this.routes);
+  }
+
+  getAllPlaces(places){
+    this.places=places;
+    console.log(this.places);
   }
 
 }

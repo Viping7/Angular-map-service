@@ -5,6 +5,14 @@ agm-map {
   .container-fluid{
     padding: 0px 15px 0px 0px;
   }
+  a{
+    
+    text-decoration: none;
+    &:hover{
+      
+      text-decoration: none;
+    }
+  }
 .route-wrapper{
   height: 100vh;
   overflow-y: auto;
@@ -14,7 +22,8 @@ agm-map {
   .route-selection{
 
     background: #009688;
-    padding: 30px 15px 15px 25px;
+    padding: 30px 15px 15px 30px;
+    margin-bottom: 10px;
     .form-control{
       border-radius: 0px;
       box-shadow: none;
@@ -63,6 +72,63 @@ agm-map {
         h4{
           font-size: 14px;
         }
+      }
+    }
+  }
+  .panel{
+    background: none;
+    border: none;
+    .panel-heading{
+      border-radius: 0px;
+      background: #009688;
+      padding: 15px 30px;
+      border: none;
+      border-bottom: 1px solid #009688;
+      h4{
+        color: #fff;
+      }
+    }
+    .collapsed{
+    .panel-heading{
+      background: none;
+      padding: 15px 30px;
+      border: none;
+      border-bottom: 1px solid #009688;
+      h4{
+        color: #009688;
+      }
+      &:hover{
+        background: #009688;
+        h4{
+          color: #fff;
+        }
+      }
+    }
+  }
+    .panel-body{
+      padding-right: 0px;
+    }
+    
+  }
+  
+  .places-section{
+    .item{
+      padding:10px 15px;
+      h1{
+        margin-top: 0px;
+        font-size: 18px;
+        line-height: 25px;
+        font-weight: 500;
+      }
+      h5{
+        font-size: 14px;
+        color: #888;
+        line-height: 20px;
+        margin-top: 15px;
+    
+      }
+      &:nth-child(even){
+        background: #f2f2f2;
       }
     }
   }

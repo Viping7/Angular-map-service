@@ -13,6 +13,7 @@ export class DirectionsMapDirective {
   @Input() originLatLng=[];
   @Input() destinationLatLng=[];
   @Output() routes = new EventEmitter<any>();
+  @Output() places = new EventEmitter<any>();
   constructor(private gmapsApi: GoogleMapsAPIWrapper) { }
 
   ngOnInit() {
@@ -89,11 +90,11 @@ export class DirectionsMapDirective {
       radius:500,
      keyword:['Software Company']
     }, (response,status)=>{
-      console.log(response);
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         let markers=[]
+        rootSelector.places.emit(response)
         for (var i = 0; i < response.length; i++) {
-            markers.push(rootSelector.createMarker(response[i],map));
+            markers.push(rootSelector.createMarker(response[i],map,rootSelector));
         }
         var markerCluster = new MarkerClusterer(map, markers, 
           {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
@@ -101,18 +102,15 @@ export class DirectionsMapDirective {
     });
   }
 
-  createMarker(place,map){
-    console.log(place);
+  createMarker(place,map,rootSelector){
     var infowindow = new google.maps.InfoWindow();
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
       map: map,
       position: place.geometry.location
     });
-
-   
- 
       google.maps.event.addListener(marker, 'click', function() {
+      rootSelector.places.emit(place)
       infowindow.setContent(place.name);
       infowindow.open(map, this);
     });

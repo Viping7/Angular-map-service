@@ -14,19 +14,61 @@
      
       <button (click)='getRoute(0)' class="btn btn-custom">Get Direction</button>
       </div>
-      <div class="routes-section">
-        <div class="item" *ngFor='let route of routes; let i=index' (click)='getRoute(i)'>
-          <h3 class="route-name">{{route.summary}}</h3>
-          <div class='route-attr'>
-            <h3>{{route.legs[0].distance.text}}</h3>
-            <h4>{{route.legs[0].duration.text}}</h4>
+
+
+      <div class="panel-group" id="accordion" *ngIf='routes'>
+             <div class="panel panel-default">
+                <a data-toggle="collapse" data-parent="#accordion" href="#routes">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+             
+              Alternate Routes ({{routes.length}})
+            </h4>
+          </div>
+        </a>
+          <div id="routes" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <div class="routes-section">
+                <div class="item" *ngFor='let route of routes; let i=index' (click)='getRoute(i)'>
+                  <h3 class="route-name">{{route.summary}}</h3>
+                  <div class='route-attr'>
+                    <h3>{{route.legs[0].distance.text}}</h3>
+                    <h4>{{route.legs[0].duration.text}}</h4>
+                  </div>
+                </div>
+              </div></div>
+          </div>
+        </div>
+        <div class="panel panel-default" *ngIf='places'>
+
+            <a data-toggle="collapse" data-parent="#accordion" href="#places">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              Places ({{places.length}})
+            </h4>
+          </div>
+        </a>
+          <div id="places" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div class="places-section">
+                  <div class="item" *ngFor='let place of places'>
+                    <h1>{{place.name}}</h1>
+                    <h5>{{place.vicinity}}</h5>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+
+
+
+
     </div>
     <div class="col-md-9 map-section">
       <agm-map [latitude]="lat" [longitude]="lng">
-        <sebm-google-map-directions [origin]="origin" [destination]="destination" [selectedMode]='mode' (routes)='getAllRoutes($event)' [originLatLng]='originLatLng' [destinationLatLng]='destLatLng'></sebm-google-map-directions>
+        <sebm-google-map-directions [origin]="origin" [destination]="destination" [selectedMode]='mode' (routes)='getAllRoutes($event)' (places)="getAllPlaces($event)" [originLatLng]='originLatLng' [destinationLatLng]='destLatLng'></sebm-google-map-directions>
       </agm-map>
     </div>
   </div>
